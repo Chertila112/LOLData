@@ -27,15 +27,29 @@ def read_root():
 def get_summoner_puuid(gameName: str, tagLine:str, region:str = "europe"):
     url = f"https://{region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}?api_key={RIOT_API_KEY}"
     response =  requests.get(url)
-    puuid = response.json()["puuid"]
-    if response.status_code != 200:
-        raise HTTPException(status_code=404, detail="Summoner not found")
-    return puuid
+    try:
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as err:
+        raise HTTPException(status_code=response.err.status_code, detail="Summoner not found")
+
+
+@app.get("/{gameName}/{tagLine}/rank_status")
+def get_my_summoner_stats(gameName: str, tagLine:str, localRegion: str = "ru", region: str = "europe"):
+    puuid = requests.get(f"https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}?api_key={RIOT_API_KEY}").json()["puuid"]
+    url = f"https://{localRegion}.api.riotgames.com/lol/league/v4/entries/by-puuid/{puuid}?api_key={RIOT_API_KEY}"
+    response = requests.get(url)
+    try:
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as err:
+        raise HTTPException(status_code = response.err.status_code, detail = "Summoner not found")
+
 
 @app.get("/{gameName}/{tagLine}/champ_mastery")
-def summoner_champ_mastery(gameName:str, tagLine:str, region:str="ru", globalRegion:str = "europe"):
-    puuid = requests.get(f"https://{globalRegion}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}?api_key={RIOT_API_KEY}").json()["puuid"]
-    url = f"https://ru.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/top?count=5&api_key={RIOT_API_KEY}"
+def summoner_champ_mastery(gameName:str, tagLine:str, localRegion:str="ru", region:str = "europe"):
+    puuid = requests.get(f"https://{region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}?api_key={RIOT_API_KEY}").json()["puuid"]
+    url = f"https://{localRegion}.api.riotgames.com/lol/league/v4/entries/by-puuid/{puuid}?api_key={RIOT_API_KEY}"
     response = requests.get(url)
     if response.status_code != 200:
         raise HTTPException(404, "SummonerNotFound")

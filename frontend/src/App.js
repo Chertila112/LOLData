@@ -1,11 +1,11 @@
 import React from 'react';
-import SummonerSearch from './SummonerSearch';
-import './App.css'; // Подключаем стили
+import RankStats from './components/RankStats.js';
+import './components/RankStats.css'; 
 
 function App() {
   return (
     <div className="app">
-      <SummonerSearch />
+      <RankStats />
     </div>
   );
 }
