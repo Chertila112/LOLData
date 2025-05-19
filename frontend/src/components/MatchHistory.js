@@ -6,7 +6,7 @@ import '../api/api'
 import { fetchMatchHistory, fetchSpells } from '../api/api';
 
 
-export default function MatchHistory({onExpose}) {
+export default function MatchHistory() {
     const [loading, setLoading] = useState(false);
     const [matches, setMatches] = useState(null);
     const {gameName, tagLine, localRegion, region} = useOutletContext();
@@ -30,18 +30,9 @@ export default function MatchHistory({onExpose}) {
         }
     }
 
-
     useEffect(() => {
         loadMatchHistory()
     }, [])
-
-    // useEffect(() => {
-    //     const fetchSpells = async () => {
-    //     const responce = await axios.get("https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/summoner.json");
-    //     setSpellsData(responce.data.data);
-    // };
-    // fetchSpells();
-    // }, [])
 
     const loadSumms = async() =>{
         const spells = await fetchSpells();
@@ -76,7 +67,7 @@ export default function MatchHistory({onExpose}) {
     return (
         <div id = "match_history_component" class = 'justify-content-center w-75 mx-auto'>
             <h1 class = "text-center">История матчей</h1>
-            <p>{loading ? "Загрузка" : ''}</p>
+            <button className='btn-primary rounded-0' onClick = {loadMatchHistory}>{loading ? "Загрузка" : 'Обновить'}</button>
             {matches && !loading && !error&&
             <div class = "row">
                 {matches.map((match, index) => {

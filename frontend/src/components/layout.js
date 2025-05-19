@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import MatchHistory from './MatchHistory';
-import '../api/api'
-import { fetchMatchHistory } from '../api/api';
 
 
 
@@ -16,8 +14,10 @@ export default function Layout()
     const formData = { gameName, tagLine, region, localRegion};
 
 
+
+
+
     return (<div className='text-center'>
-    
     <div class = 'container w-25 mx-auto border border-3 border-bottom-0 rounded-bottom-0 rounded-top-3'>
       <div class = "mx-auto w-75">
       <h2>Проверка ранговой статистики</h2>
