@@ -16,9 +16,11 @@ function RankStats() {
     
     try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/${gameName}/${tagLine}/rank_status`,
+        `http://127.0.0.1:8000/rank_status`,
         {
           params: {
+            gameName,
+            tagLine,
             localRegion,
             region
           }
