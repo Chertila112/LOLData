@@ -47,9 +47,9 @@ def get_my_summoner_stats(gameName: str, tagLine:str, localRegion: str = "ru", r
 
 
 @app.get("/champion_stats")
-def summoner_champ_mastery(gameName:str, tagLine:str, localRegion:str="ru", region:str = "europe"):
+def summoner_champ_mastery(gameName:str, tagLine:str, localRegion:str="ru", region:str = "europe", count: int=6):
     puuid = requests.get(f"https://{region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}?api_key={RIOT_API_KEY}").json()["puuid"]
-    url = f"https://{localRegion}.api.riotgames.com/lol/league/v4/entries/by-puuid/{puuid}?api_key={RIOT_API_KEY}"
+    url = f"https://{localRegion}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}/top?count={count}&api_key={RIOT_API_KEY}"
     response = requests.get(url)
     if response.status_code != 200:
         raise HTTPException(404, "SummonerNotFound")

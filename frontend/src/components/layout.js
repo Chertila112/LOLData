@@ -75,9 +75,9 @@ export default function Layout()
       </div>
     </div>
         <div class="btn-group w-25 mb-2 border border-3 rounded-0" role="group" aria-label="Basic example">
-            <Link to='/' type="button" class="btn btn-danger rounded-0" >HOME</Link>
-            <Link to='/rank_status' type="button" class="btn btn-warning">RANKED</Link>
-            <Link to='/match_history' type="button" class="btn btn-success rounded-0">HISTORY</Link>
+            <Link to='/' type="button" class="btn btn-danger rounded-0" >МАСТЕРСТВО</Link>
+            <Link to='/rank_status' type="button" class="btn btn-warning">РАНГ</Link>
+            <Link to='/match_history' type="button" class="btn btn-success rounded-0">ИСТОРИЯ ИГР</Link>
         </div>
         <Outlet context={formData}/>
     </div>

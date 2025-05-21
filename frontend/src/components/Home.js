@@ -2,7 +2,10 @@ import { useNavigate } from 'react-router-dom';
 
 export default function HomePage() {
   
+
+
+
   return (
-    <div>Приветик!</div>
+    <div></div>
   );
 }
